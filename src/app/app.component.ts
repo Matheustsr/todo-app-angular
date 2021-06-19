@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.css'] // path of css comp.
 })
 export class AppComponent { //make public
+  public mode: String = 'list';
   public todos: Todo[] = [];
   public title: string = "Meus Projetos!";
   public form: FormGroup;
@@ -63,5 +64,10 @@ export class AppComponent { //make public
     const data = localStorage.getItem('todos');
     this.todos = JSON.parse(localStorage.getItem('todos')!);
   }
+
+  changeMode(mode: String){
+    this.mode = mode;
+  }
+
 }
 

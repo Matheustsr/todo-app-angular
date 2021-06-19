@@ -1,18 +1,29 @@
 <h1>{{ title }}</h1>
-<ul>
-      <p *ngIf="todos.length == 0"><small>Não tem nenhuma tarefa para hoje!</small></p>
-    <li *ngFor="let todo of todos">{{todo.id}}. {{todo.task}}|
+<ul class="animated flipInX" *ngIf="mode =='list'">
+    <p *ngIf="todos.length == 0"><small>Não tem nenhuma tarefa para hoje!</small></p>
+    <li *ngFor="let todo of todos">{{todo.task}}
       <button (click)="markAsDone(todo)" *ngIf="!todo.done">Concluir</button>
       <button (click)="markAsUndone(todo)" *ngIf="todo.done" >Refazer</button>
       <button (click)="removeTask(todo)">Remover</button>
     </li>
 </ul>
 
-<form [formGroup]="form">
-  <fieldset>
-    <label>Tarefa: </label>
-    <input type="text" placeholder="Titulo da tarefa" maxlength="60" formControlName="title">
-    <small *ngIf="form.controls.title.invalid && !form.controls.title.pristine">Este campo deve ter entre 3 e 60 caracteres!</small>
-    <button [disabled]="form.invalid" (click)="addTask()" >Salvar</button> <!-- disable button for validate-->
-  </fieldset>
-</form>
+<div id="modal" *ngIf="mode=='add'" class="animate flipInX">
+  <form [formGroup]="form">
+    <fieldset>
+      <label>Tarefa: </label>
+      <input type="text" placeholder="Titulo da tarefa" maxlength="60" formControlName="title">
+      <small *ngIf="form.controls.title.invalid && !form.controls.title.pristine">Este campo deve ter entre 3 e 60 caracteres!</small>
+      <button class= "button" [disabled]="form.invalid" (click)="addTask()" >Salvar</button> <!-- disable button for validate-->
+    </fieldset>
+  </form>
+</div>
+
+<button class="add-button animated fadeInIp button" (click)="changeMode('add')" *ngIf="mode=='list'">
+  <i class="fas fa-plus-circle"></i>
+  NOVA TAREFA
+</button>
+<button class="add-button animated fadeInIp button" (click)="changeMode('list')" *ngIf="mode=='add'">
+  <i class="fas fa-plus-circle"></i>
+  CANCELAR
+</button>
