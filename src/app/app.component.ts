@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AppComponent { //make public
   public todos: Todo[] = [];
-  public title: string = "Meus projetos";
+  public title: string = "Meus Projetos!";
   public form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -21,6 +21,8 @@ export class AppComponent { //make public
         Validators.required
       ])]
     });
+
+    this.loadData();
   }
 
   addTask(){
@@ -39,14 +41,17 @@ export class AppComponent { //make public
       if(index !== -1){
         this.todos.splice(index, 1); // delete one index of list
       }
-    }
+      this.saveToLocalStorage();
+  }
 
   markAsDone(todo: Todo){
       todo.done = true;
+      this.saveToLocalStorage();
   }
 
   markAsUndone(todo: Todo){
       todo.done = false;
+      this.saveToLocalStorage();
   }
 
   saveToLocalStorage(){
@@ -56,6 +61,7 @@ export class AppComponent { //make public
 
   loadData(){
     const data = localStorage.getItem('todos');
+    this.todos = JSON.parse(localStorage.getItem('todos')!);
   }
 }
 
